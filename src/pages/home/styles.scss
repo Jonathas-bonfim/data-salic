@@ -1,5 +1,5 @@
 #container{
-  max-width: 1120px;
+  max-width: 1300px;
   margin: 3rem auto;
   padding: 2rem;
 }
@@ -13,7 +13,11 @@
 .carousel{
   max-width: 400px;
   padding: 1.5rem 2rem;
+
   border: 1px solid var(--grey--50);
+  border-radius: 6px;
+  box-shadow: 1px 1px 4px rgba(161, 160, 160, 0.212);
+
   color: var(--grey--200);
 
   .tag {
@@ -60,12 +64,33 @@
       color: var(--grey--200);
       padding: 1rem 6rem;
       border: none;
+      border-radius: 8px;
+
+      transition: filter 0.2s;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
     }
     img{
       height: 2.7rem;
       opacity: 0.5;
       border: none;
+      cursor: pointer;
+
+      transition: filter 0.2s;
+
+      &:hover {
+        filter: opacity(0.8);
+      }
     }
   }
+}
 
+.all-data{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: -4.5rem;
+  color: var(--grey--200);
 }

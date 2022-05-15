@@ -3,6 +3,10 @@ import logoIMG from '../assets/images/logo.png'
 import LogoutIMG from '../assets/images/logout.svg'
 
 export function Header() {
+  function Close() {
+    window.close();
+  }
+
   return (
     <header className="container">
       <div className="content">
@@ -17,7 +21,9 @@ export function Header() {
         </nav>
 
         <div className="icons">
-          <img src={LogoutIMG} className="icon" alt="Sair" />
+          <a onClick={Close} href="#/">
+            <img src={LogoutIMG} className="icon" alt="Sair" />
+          </a>
         </div>
 
       </div>

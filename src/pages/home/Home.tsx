@@ -8,6 +8,7 @@ import "react-alice-carousel/lib/scss/alice-carousel.scss";
 import { Header } from "../../components/Header";
 import { useState, useEffect } from "react";
 import { api } from '../../services/api';
+import { formatPrice } from '../../util/format';
 
 interface ProjectProps {
   area: string;
@@ -15,8 +16,8 @@ interface ProjectProps {
   municipio: string;
   UF: string;
   objetivos: string;
-  valor_aprovado: string;
-  valor_captado: string;
+  valor_aprovado: number;
+  valor_captado: number;
 }
 
 export function Home() {
@@ -24,9 +25,15 @@ export function Home() {
 
   useEffect(() => {
     api.get(``).then((response) => {
-      console.log(response.data._embedded.projetos);
+      setProject(response.data._embedded.projetos);
     })
-  })
+  }, [])
+
+  const responsive = {
+    0: { items: 1 },
+    568: { items: 2 },
+    1024: { items: 3 },
+  };
 
   return (
     <>
@@ -34,115 +41,43 @@ export function Home() {
 
       <div id="container">
         <h1 className="title-carousel">Ver Outros projetos do Proponente</h1>
-        <AliceCarousel >
-          <section className="carousel">
-            <strong className="tag">Area</strong>
-            <h4>Nome do Projeto</h4>
-            <p className="localization">São Paulo ● SP</p>
-            <p className="description">
-              O presente projeto intenciona promover o resgate, a difusão
-              e o acesso à música de canto coral genuinamente brasileira
-              através da manutenção do corpo artístico Coral Laudade
-              durante o
-            </p>
+        <AliceCarousel
+          responsive={responsive}
+          disableButtonsControls={false}
+          infinite={true}
+          keyboardNavigation={true}
+          mouseTracking={true}
+          swipeDelta={0}
+        >
+          {
+            project.map(data => (
+              <section className="carousel" key={data.nome}>
+                <strong className="tag">{data.area}</strong>
+                <h4>{data.area}</h4>
+                <p className="localization">{data.municipio} ● {data.UF}</p>
+                <p className="description">
+                  {data.objetivos}
+                </p>
 
-            <p className="approved-value title-value">
-              Aprovado
-              <strong className="value">R$ 100.000,00</strong>
-            </p>
-            <p className="title-value">
-              Captado&ensp;
-              <strong className="value">R$ 500.000,00</strong>
-            </p>
+                <p className="approved-value title-value">
+                  Aprovado
+                  <strong className="value">{formatPrice(data.valor_aprovado)}</strong>
+                </p>
+                <p className="title-value">
+                  Captado&ensp;
+                  <strong className="value">{formatPrice(data.valor_captado)}</strong>
+                </p>
 
-            <div className="icons">
-              <button>ADICIONAR</button>
-              <img src={favoriteIMG} alt="Favorito" />
-            </div>
+                <div className="icons">
+                  <button>ADICIONAR</button>
+                  <img src={favoriteIMG} alt="Favorito" />
+                </div>
 
-          </section>
-
-          <section className="carousel">
-            <strong className="tag">Area</strong>
-            <h4>Nome do Projeto</h4>
-            <p className="localization">São Paulo ● SP</p>
-            <p className="description">
-              O presente projeto intenciona promover o resgate, a difusão
-              e o acesso à música de canto coral genuinamente brasileira
-              através da manutenção do corpo artístico Coral Laudade
-              durante o
-            </p>
-
-            <p className="approved-value title-value">
-              Aprovado
-              <strong className="value">R$ 100.000,00</strong>
-            </p>
-            <p className="title-value">
-              Captado&ensp;
-              <strong className="value">R$ 500.000,00</strong>
-            </p>
-
-            <div className="icons">
-              <button>ADICIONAR</button>
-              <img src={favoriteIMG} alt="Favorito" />
-            </div>
-
-          </section>
-
-          <section className="carousel">
-            <strong className="tag">Area</strong>
-            <h4>Nome do Projeto</h4>
-            <p className="localization">São Paulo ● SP</p>
-            <p className="description">
-              O presente projeto intenciona promover o resgate, a difusão
-              e o acesso à música de canto coral genuinamente brasileira
-              através da manutenção do corpo artístico Coral Laudade
-              durante o
-            </p>
-
-            <p className="approved-value title-value">
-              Aprovado
-              <strong className="value">R$ 100.000,00</strong>
-            </p>
-            <p className="title-value">
-              Captado&ensp;
-              <strong className="value">R$ 500.000,00</strong>
-            </p>
-
-            <div className="icons">
-              <button>ADICIONAR</button>
-              <img src={favoriteIMG} alt="Favorito" />
-            </div>
-
-          </section>
-
-          <section className="carousel">
-            <strong className="tag">Area</strong>
-            <h4>Nome do Projeto</h4>
-            <p className="localization">São Paulo ● SP</p>
-            <p className="description">
-              O presente projeto intenciona promover o resgate, a difusão
-              e o acesso à música de canto coral genuinamente brasileira
-              através da manutenção do corpo artístico Coral Laudade
-              durante o
-            </p>
-
-            <p className="approved-value title-value">
-              Aprovado
-              <strong className="value">R$ 100.000,00</strong>
-            </p>
-            <p className="title-value">
-              Captado&ensp;
-              <strong className="value">R$ 500.000,00</strong>
-            </p>
-
-            <div className="icons">
-              <button>ADICIONAR</button>
-              <img src={favoriteIMG} alt="Favorito" />
-            </div>
-
-          </section>
+              </section>
+            ))
+          }
         </AliceCarousel>
+        <p className="all-data">+ VER TODOS</p>
       </div>
     </>
   )
